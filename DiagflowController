@@ -14,7 +14,7 @@ using System.Web.Script.Services;
 using System.Web.Services;
  
  
-namespace namespacename.Controllers
+namespace DiagflowWebhook.Controllers
 {
     public class DiagflowController : Controller
     {
