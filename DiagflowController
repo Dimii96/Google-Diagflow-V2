@@ -35,7 +35,7 @@ namespace DiagflowWebhook.Controllers
                 switch (intent)
                 {
                     case "IntentNameHere":
-                        return IntentNameHere(result);
+                        return IntentNameHere(result); // function name doesnt have to be same as Intent name
                     default:
                         // Diagflow should throw an error before even reaching this, but it it breaks somehow, run Fallback to say error found
                         return Fallback(result); 
@@ -46,15 +46,16 @@ namespace DiagflowWebhook.Controllers
                 return null;
             }
         }
+        
         // Intents - Different function for each intent
  
         public ActionResult IntentNameHere(GoogleRequest result)
         {
-            var speech = "";
+            var speech = "This string here is what will be said by Google";
  
             WebhookResponse jsonData = new WebhookResponse
             {
-                fulfillmentText = speech,
+                fulfillmentText = speech, // This is what is said back to the user
                 source = "VSC API",
             };
  
@@ -68,7 +69,7 @@ namespace DiagflowWebhook.Controllers
  
             WebhookResponse jsonData = new WebhookResponse
             {
-                fulfillmentText = speech,
+                fulfillmentText = speech, // This is what is said back to the user
                 source = "VSC API",
             };
  
@@ -101,15 +102,15 @@ namespace DiagflowWebhook.Controllers
             public string languageCode { get; set; }
         }
  
+        // Paramaters userd in Dialogflow
         public class Parameters
         {
             public string eventName { get; set; }
             public DateTime dateTime { get; set; }
             public DateTime time { get; set;  }
             public DateTime date { get; set; }
- 
- 
         }
+        
         public class FulFillmentMessages { }
         public class Contexts { }
         public class DiagnosticInfo { }
