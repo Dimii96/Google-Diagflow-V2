@@ -18,7 +18,7 @@ namespace DiagflowWebhook.Controllers
 {
     public class DiagflowController : Controller
     {
-        private VSCDbContext db = new VSCDbContext();
+        private MyDatabaseDbContext db = new MyDatabaseDbContext();
         JavaScriptSerializer ser = new JavaScriptSerializer();
  
         /* GET: Values */
@@ -29,7 +29,7 @@ namespace DiagflowWebhook.Controllers
         {
             try
             {
-                // grab intent and run function relative to intent to send back data to Google
+                // Grab intent and run function relative to intent to send back data to Google
                 var intent = result.queryResult.intent.displayName;
  
                 switch (intent)
@@ -43,7 +43,8 @@ namespace DiagflowWebhook.Controllers
             }
             catch (Exception e)
             {
-                return null;
+                // Return a fallback if there is an exception
+                return Fallback(result); 
             }
         }
         
@@ -51,12 +52,12 @@ namespace DiagflowWebhook.Controllers
  
         public ActionResult IntentNameHere(GoogleRequest result)
         {
-            var speech = "This string here is what will be said by Google";
+            var speech = "This string here is what will be said by Google back to the user";
  
             WebhookResponse jsonData = new WebhookResponse
             {
                 fulfillmentText = speech, // This is what is said back to the user
-                source = "VSC API",
+                source = "Diagflow API",
             };
  
             string str = ser.Serialize(jsonData);
@@ -65,12 +66,12 @@ namespace DiagflowWebhook.Controllers
  
         public ActionResult Fallback(GoogleRequest result)
         {
-            var speech = "Sorry, I had an issue";
+            var speech = "Sorry, I had an issue with completing your request. Please try again later.";
  
             WebhookResponse jsonData = new WebhookResponse
             {
                 fulfillmentText = speech, // This is what is said back to the user
-                source = "VSC API",
+                source = "DialogFlow API",
             };
  
             string str = ser.Serialize(jsonData);
